@@ -10,7 +10,7 @@ import '../services/recommendations.dart';
 import '../services/secure_budget_store.dart';
 import '../services/transaction_importer.dart';
 
-final currency = NumberFormat.currency(locale: 'en_TT', symbol: 'TT\$', decimalDigits: 2);
+final currency = NumberFormat.currency(locale: 'en_GB', symbol: 'TT\$', decimalDigits: 2);
 String money(int cents) => currency.format(cents / 100);
 
 class HomeScreen extends StatefulWidget {

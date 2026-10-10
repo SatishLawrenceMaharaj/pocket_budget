@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:intl/intl.dart';
 
+import 'services/locale_setup.dart';
 import 'services/secure_budget_store.dart';
 import 'ui/home_screen.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Intl.defaultLocale = 'en_TT';
+  // DateFormat throws when en_TT is used without supported locale data.
+  // Initialise a supported English locale before drawing the dashboard.
+  await initializePocketBudgetLocale();
+  // A release-mode build error otherwise looks like a completely grey page.
+  ErrorWidget.builder = (details) => const Center(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Text(
+            'This screen could not be displayed. Close and reopen Pocket Budget. '
+            'If the problem continues, a code update may be needed.',
+            textAlign: TextAlign.center,
+            textDirection: TextDirection.ltr,
+          ),
+        ),
+      );
   runApp(const PocketBudgetApp());
 }
 
