@@ -23,6 +23,9 @@ jobs:
       - name: Generate Android platform files
         run: flutter create --platforms=android --project-name=pocket_budget --org=app.privatebudget .
 
+      - name: Remove Flutter generated sample test
+        run: rm -f test/widget_test.dart
+
       - name: Configure Android biometrics and storage privacy
         run: python3 scripts/configure_platforms.py
 
