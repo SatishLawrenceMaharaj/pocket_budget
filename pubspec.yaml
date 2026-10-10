@@ -1,0 +1,27 @@
+name: pocket_budget
+version: 0.1.0+1
+publish_to: none
+description: Private, offline monthly budget tracker for Android and iOS.
+
+environment:
+  sdk: '>=3.10.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cryptography: ^2.9.0
+  crypto: ^3.0.6
+  csv: ^6.0.0
+  file_picker: ^13.1.0
+  flutter_secure_storage: ^11.2.0
+  intl: ^0.20.3
+  local_auth: ^3.0.2
+  path_provider: ^2.1.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

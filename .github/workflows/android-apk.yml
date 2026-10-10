@@ -1,0 +1,44 @@
+name: Build Pocket Budget Android APK
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout private source
+        uses: actions/checkout@v4
+
+      - name: Install Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Generate Android platform files
+        run: flutter create --platforms=android --project-name=pocket_budget --org=app.privatebudget .
+
+      - name: Configure Android biometrics and storage privacy
+        run: python3 scripts/configure_platforms.py
+
+      - name: Fetch dependencies
+        run: flutter pub get
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Build release APK
+        run: flutter build apk --release
+
+      - name: Check output and upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pocket-budget-android-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+          retention-days: 7
